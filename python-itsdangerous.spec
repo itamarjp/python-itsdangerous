@@ -8,7 +8,7 @@
 
 Name:           python-%{upstream_name}
 Version:        0.21
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Python library for passing trusted data to untrusted environments
 License:        BSD
 URL:            http://pythonhosted.org/itsdangerous/
@@ -75,14 +75,14 @@ pushd %{py3dir}
 popd
 %endif
 
-%{__python} setup.py install -O1 --skip-build --root $RPM_BUILD_ROOT
+%{__python} setup.py install -O1 --skip-build --root %{buildroot}
 
 %check
-PYTHONPATH=$RPM_BUILD_ROOT%{python_sitelib} %{__python} tests.py
+PYTHONPATH=%{buildroot}%{python_sitelib} %{__python} tests.py
 
 %if %{with python3}
 pushd %{py3dir}
-PYTHONPATH=$RPM_BUILD_ROOT%{python3_sitelib} %{__python3} tests.py
+PYTHONPATH=%{buildroot}%{python3_sitelib} %{__python3} tests.py
 popd
 %endif
 
@@ -100,9 +100,12 @@ popd
 %endif
 
 %changelog
+* Mon Jun 17 2013 Dan Callaghan <dcallagh@redhat.com> - 0.21-2
+- $RPM_BUILD_ROOT -> %%{buildroot}
+
 * Fri Jun 14 2013 Dan Callaghan <dcallagh@redhat.com> - 0.21-1
 - updated to upstream release 0.21
 - added Python 3 subpackage
 
-* Wed Nov 11 2011 Dan Callaghan <dcallagh@redhat.com> - 0.11-1
+* Wed Nov 16 2011 Dan Callaghan <dcallagh@redhat.com> - 0.11-1
 - initial version
