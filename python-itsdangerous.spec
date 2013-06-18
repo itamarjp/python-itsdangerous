@@ -1,6 +1,6 @@
 %global upstream_name itsdangerous
 
-%if 0%{?fedora} || 0%{?rhel} > 6
+%if 0%{?fedora} >= 18 || 0%{?rhel} > 6
 %bcond_without python3
 %else
 %bcond_with python3
@@ -8,7 +8,7 @@
 
 Name:           python-%{upstream_name}
 Version:        0.21
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        Python library for passing trusted data to untrusted environments
 License:        BSD
 URL:            http://pythonhosted.org/itsdangerous/
@@ -100,6 +100,9 @@ popd
 %endif
 
 %changelog
+* Tue Jun 18 2013 Dan Callaghan <dcallagh@redhat.com> - 0.21-3
+- disable Python 3 subpackage on Fedora 17
+
 * Mon Jun 17 2013 Dan Callaghan <dcallagh@redhat.com> - 0.21-2
 - $RPM_BUILD_ROOT -> %%{buildroot}
 
