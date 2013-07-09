@@ -7,8 +7,8 @@
 %endif
 
 Name:           python-%{upstream_name}
-Version:        0.21
-Release:        3%{?dist}
+Version:        0.22
+Release:        1%{?dist}
 Summary:        Python library for passing trusted data to untrusted environments
 License:        BSD
 URL:            http://pythonhosted.org/itsdangerous/
@@ -100,6 +100,9 @@ popd
 %endif
 
 %changelog
+* Tue Jul 09 2013 Dan Callaghan <dcallagh@redhat.com> - 0.22-1
+- new upstream release 0.22
+
 * Tue Jun 18 2013 Dan Callaghan <dcallagh@redhat.com> - 0.21-3
 - disable Python 3 subpackage on Fedora 17
 
