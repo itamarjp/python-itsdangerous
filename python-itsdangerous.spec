@@ -7,17 +7,12 @@
 %endif
 
 Name:           python-%{upstream_name}
-Version:        0.22
-Release:        2%{?dist}
+Version:        0.23
+Release:        1%{?dist}
 Summary:        Python library for passing trusted data to untrusted environments
 License:        BSD
 URL:            http://pythonhosted.org/itsdangerous/
 Source0:        http://pypi.python.org/packages/source/i/%{upstream_name}/%{upstream_name}-%{version}.tar.gz
-# Tarballs on PyPi lack LICENSE, CHANGES, and tests.
-# https://github.com/mitsuhiko/itsdangerous/pull/22
-Source1:        LICENSE
-Source2:        CHANGES
-Source3:        tests.py
 BuildArch:      noarch
 BuildRequires:  python2-devel
 BuildRequires:  python-setuptools
@@ -52,7 +47,6 @@ Signatures (JWS).
 %prep
 %setup -q -n %{upstream_name}-%{version}
 rm -r *.egg-info
-cp -p %{SOURCE1} %{SOURCE2} %{SOURCE3} .
 
 %if %{with python3}
 rm -rf %{py3dir}
@@ -100,6 +94,9 @@ popd
 %endif
 
 %changelog
+* Thu Aug 15 2013 Dan Callaghan <dcallagh@redhat.com> - 0.23-1
+- new upstream release 0.23 (no code changes, only packaging fixes)
+
 * Sun Aug 04 2013 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 0.22-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_20_Mass_Rebuild
 
