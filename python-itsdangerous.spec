@@ -1,6 +1,6 @@
 %global upstream_name itsdangerous
 
-%if 0%{?fedora} >= 18 || 0%{?rhel} > 6
+%if 0%{?fedora}
 %bcond_without python3
 %else
 %bcond_with python3
