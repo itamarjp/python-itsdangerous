@@ -7,7 +7,7 @@
 %endif
 
 Name:           python-%{upstream_name}
-Version:        0.23
+Version:        0.24
 Release:        1%{?dist}
 Summary:        Python library for passing trusted data to untrusted environments
 License:        BSD
@@ -94,6 +94,9 @@ popd
 %endif
 
 %changelog
+* Mon Mar 31 2014 Dan Callaghan <dcallagh@redhat.com> - 0.24-1
+- new upstream release 0.24
+
 * Thu Aug 15 2013 Dan Callaghan <dcallagh@redhat.com> - 0.23-1
 - new upstream release 0.23 (no code changes, only packaging fixes)
 
