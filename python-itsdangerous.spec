@@ -8,7 +8,7 @@
 
 Name:           python-%{upstream_name}
 Version:        0.24
-Release:        3%{?dist}
+Release:        4%{?dist}
 Summary:        Python library for passing trusted data to untrusted environments
 License:        BSD
 URL:            http://pythonhosted.org/itsdangerous/
@@ -94,6 +94,9 @@ popd
 %endif
 
 %changelog
+* Thu Jun 18 2015 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 0.24-4
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_23_Mass_Rebuild
+
 * Sat Jun 07 2014 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 0.24-3
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_21_Mass_Rebuild
 
