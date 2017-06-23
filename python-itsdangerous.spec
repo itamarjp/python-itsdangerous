@@ -8,20 +8,29 @@
 
 Name:           python-%{upstream_name}
 Version:        0.24
-Release:        9%{?dist}
+Release:        10%{?dist}
 Summary:        Python library for passing trusted data to untrusted environments
 License:        BSD
 URL:            http://pythonhosted.org/itsdangerous/
 Source0:        http://pypi.python.org/packages/source/i/%{upstream_name}/%{upstream_name}-%{version}.tar.gz
 BuildArch:      noarch
-BuildRequires:  python2-devel
-BuildRequires:  python-setuptools
-%if %{with python3}
-BuildRequires:  python3-devel
-BuildRequires:  python3-setuptools
-%endif
 
 %description
+Itsdangerous is a Python library for passing data through untrusted 
+environments (for example, HTTP cookies) while ensuring the data is not 
+tampered with.
+
+Internally itsdangerous uses HMAC and SHA1 for signing by default and bases the 
+implementation on the Django signing module. It also however supports JSON Web 
+Signatures (JWS).
+
+%package -n python2-%{upstream_name}
+Summary:        Python 2 library for passing trusted data to untrusted environments
+%{?python_provide:%python_provide python2-%{upstream_name}}
+BuildRequires:  python2-devel
+BuildRequires:  python2-setuptools
+
+%description -n python2-%{upstream_name}
 Itsdangerous is a Python library for passing data through untrusted 
 environments (for example, HTTP cookies) while ensuring the data is not 
 tampered with.
@@ -33,6 +42,9 @@ Signatures (JWS).
 %if %{with python3}
 %package -n python3-%{upstream_name}
 Summary:        Python 3 library for passing trusted data to untrusted environments
+%{?python_provide:%python_provide python3-%{upstream_name}}
+BuildRequires:  python3-devel
+BuildRequires:  python3-setuptools
 
 %description -n python3-%{upstream_name}
 Itsdangerous is a Python 3 library for passing data through untrusted 
@@ -48,52 +60,43 @@ Signatures (JWS).
 %setup -q -n %{upstream_name}-%{version}
 rm -r *.egg-info
 
-%if %{with python3}
-rm -rf %{py3dir}
-cp -a . %{py3dir}
-%endif
-
 %build
-%{__python} setup.py build
-
+%py2_build
 %if %{with python3}
-pushd %{py3dir}
-%{__python3} setup.py build
-popd
+%py3_build
 %endif
 
 %install
+%py2_install
 %if %{with python3}
-pushd %{py3dir}
-%{__python3} setup.py install --skip-build --root %{buildroot}
-popd
+%py3_install
 %endif
-
-%{__python} setup.py install -O1 --skip-build --root %{buildroot}
 
 %check
-PYTHONPATH=%{buildroot}%{python_sitelib} %{__python} tests.py
-
+PYTHONPATH=%{buildroot}%{python2_sitelib} %{__python2} tests.py
 %if %{with python3}
-pushd %{py3dir}
 PYTHONPATH=%{buildroot}%{python3_sitelib} %{__python3} tests.py
-popd
 %endif
 
-%files
-%doc LICENSE CHANGES README
-%{python_sitelib}/%{upstream_name}.py*
-%{python_sitelib}/%{upstream_name}*.egg-info
+%files -n python2-%{upstream_name}
+%license LICENSE
+%doc CHANGES README
+%{python2_sitelib}/%{upstream_name}.py*
+%{python2_sitelib}/%{upstream_name}*.egg-info
 
 %if %{with python3}
 %files -n python3-%{upstream_name}
-%doc LICENSE CHANGES README
+%license LICENSE
+%doc CHANGES README
 %{python3_sitelib}/%{upstream_name}.py
 %{python3_sitelib}/%{upstream_name}*.egg-info
 %{python3_sitelib}/__pycache__/%{upstream_name}*
 %endif
 
 %changelog
+* Fri Jun 23 2017 Dan Callaghan <dcallagh@redhat.com> - 0.24-10
+- renamed python-itsdangerous to python2-itsdangerous
+
 * Sat Feb 11 2017 Fedora Release Engineering <releng@fedoraproject.org> - 0.24-9
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_26_Mass_Rebuild
 
