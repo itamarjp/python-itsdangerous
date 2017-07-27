@@ -8,7 +8,7 @@
 
 Name:           python-%{upstream_name}
 Version:        0.24
-Release:        10%{?dist}
+Release:        11%{?dist}
 Summary:        Python library for passing trusted data to untrusted environments
 License:        BSD
 URL:            http://pythonhosted.org/itsdangerous/
@@ -94,6 +94,9 @@ PYTHONPATH=%{buildroot}%{python3_sitelib} %{__python3} tests.py
 %endif
 
 %changelog
+* Thu Jul 27 2017 Fedora Release Engineering <releng@fedoraproject.org> - 0.24-11
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_27_Mass_Rebuild
+
 * Fri Jun 23 2017 Dan Callaghan <dcallagh@redhat.com> - 0.24-10
 - renamed python-itsdangerous to python2-itsdangerous
 
