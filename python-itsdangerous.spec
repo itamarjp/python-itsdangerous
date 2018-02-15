@@ -1,19 +1,14 @@
 %global upstream_name itsdangerous
 
-%if 0%{?fedora} || 0%{?rhel} > 7
-%bcond_without python3
-%else
-%bcond_with python3
-%endif
-
 Name:           python-%{upstream_name}
 Version:        0.24
-Release:        13%{?dist}
+Release:        14%{?dist}
 Summary:        Python library for passing trusted data to untrusted environments
 License:        BSD
 URL:            http://pythonhosted.org/itsdangerous/
 Source0:        http://pypi.python.org/packages/source/i/%{upstream_name}/%{upstream_name}-%{version}.tar.gz
 BuildArch:      noarch
+
 
 %description
 Itsdangerous is a Python library for passing data through untrusted 
@@ -39,14 +34,13 @@ Internally itsdangerous uses HMAC and SHA1 for signing by default and bases the
 implementation on the Django signing module. It also however supports JSON Web 
 Signatures (JWS).
 
-%if %{with python3}
-%package -n python3-%{upstream_name}
+%package -n python%{python3_pkgversion}-%{upstream_name}
 Summary:        Python 3 library for passing trusted data to untrusted environments
-%{?python_provide:%python_provide python3-%{upstream_name}}
-BuildRequires:  python3-devel
-BuildRequires:  python3-setuptools
+%{?python_provide:%python_provide python%{python3_pkgversion}-%{upstream_name}}
+BuildRequires:  python%{python3_pkgversion}-devel
+BuildRequires:  python%{python3_pkgversion}-setuptools
 
-%description -n python3-%{upstream_name}
+%description -n python%{python3_pkgversion}-%{upstream_name}
 Itsdangerous is a Python 3 library for passing data through untrusted 
 environments (for example, HTTP cookies) while ensuring the data is not 
 tampered with.
@@ -54,7 +48,6 @@ tampered with.
 Internally itsdangerous uses HMAC and SHA1 for signing by default and bases the 
 implementation on the Django signing module. It also however supports JSON Web 
 Signatures (JWS).
-%endif
 
 %prep
 %setup -q -n %{upstream_name}-%{version}
@@ -62,21 +55,15 @@ rm -r *.egg-info
 
 %build
 %py2_build
-%if %{with python3}
 %py3_build
-%endif
 
 %install
 %py2_install
-%if %{with python3}
 %py3_install
-%endif
 
 %check
 PYTHONPATH=%{buildroot}%{python2_sitelib} %{__python2} tests.py
-%if %{with python3}
 PYTHONPATH=%{buildroot}%{python3_sitelib} %{__python3} tests.py
-%endif
 
 %files -n python2-%{upstream_name}
 %license LICENSE
@@ -84,16 +71,17 @@ PYTHONPATH=%{buildroot}%{python3_sitelib} %{__python3} tests.py
 %{python2_sitelib}/%{upstream_name}.py*
 %{python2_sitelib}/%{upstream_name}*.egg-info
 
-%if %{with python3}
-%files -n python3-%{upstream_name}
+%files -n python%{python3_pkgversion}-%{upstream_name}
 %license LICENSE
 %doc CHANGES README
 %{python3_sitelib}/%{upstream_name}.py
 %{python3_sitelib}/%{upstream_name}*.egg-info
 %{python3_sitelib}/__pycache__/%{upstream_name}*
-%endif
 
 %changelog
+* Thu Feb 15 2018 Itamar Reis Peixoto <itamar@ispbrasil.com.br> - 0.24-14
+- remove conditionals, always build for python 3
+
 * Fri Feb 09 2018 Fedora Release Engineering <releng@fedoraproject.org> - 0.24-13
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_28_Mass_Rebuild
 
